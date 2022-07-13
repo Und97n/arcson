@@ -1,9 +1,10 @@
 import com.jsoniter.JsonIterator
 import org.philips.arcson.schema.blueprint.JsonObjectBlueprint
 import org.philips.arcson.schema.JsonParser
+import kotlin.random.Random
 
-fun main(args: Array<String>) {
-        val input = """
+val INPUT = arrayOf(
+    """
         {
         	"id": "0001",
         	"type": "donut",
@@ -21,12 +22,41 @@ fun main(args: Array<String>) {
         			"height": 32
         		}
         }
-    """
-    val parser = JsonParser(input)
+""", """
+        {
+        	"id": "0001",
+        	"type": "donut",
+        	"name": "Cake",
+        	"image":
+        		{
+        			"url": "images/0001.jpg",
+        			"width": 200,
+        			"height": 200
+        		}
+        }
+""", """
+        {
+        	"id": "0001",
+        	"type": "donut",
+        	"image":
+        		{
+        			"url": "images/0001.jpg"
+        		},
+        	"thumbnail":
+        		{
+        			"url": "images/thumbnails/0001.jpg"
+        		}
+        }
+""")
+
+fun main(args: Array<String>) {
 
     val obj = JsonObjectBlueprint()
 
-    parser.parse(obj)
+    for (i in 1..1000000) {
+        val parser = JsonParser(INPUT[Random.nextInt(INPUT.size)])
+        parser.parse(obj)
+    }
 
     println(obj)
 
