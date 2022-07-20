@@ -1,5 +1,4 @@
-import com.jsoniter.JsonIterator
-import org.philips.arcson.schema.blueprint.JsonObjectBlueprint
+import org.philips.arcson.schema.blueprint.models.JsonObjectBlueprint
 import org.philips.arcson.schema.JsonParser
 import kotlin.random.Random
 

@@ -3,6 +3,9 @@ package org.philips.arcson.schema
 import com.jsoniter.JsonIterator
 import com.jsoniter.ValueType
 import org.philips.arcson.schema.blueprint.*
+import org.philips.arcson.schema.blueprint.models.JsonNumberBlueprint
+import org.philips.arcson.schema.blueprint.models.JsonObjectBlueprint
+import org.philips.arcson.schema.blueprint.models.JsonStringBlueprint
 
 @JvmInline
 value class JsonParser(private val iterator: JsonIterator) {
