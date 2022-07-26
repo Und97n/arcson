@@ -1,13 +1,16 @@
 package org.philips.arcson.schema.blueprint.models
 
-import org.philips.arcson.common.type.JsonValueType
-import org.philips.arcson.common.type.JsonValueTypeNumber
-import org.philips.arcson.schema.blueprint.JsonSimpleBlueprint
 import org.philips.arcson.schema.blueprint.StringIndentation
+import org.philips.arcson.type.ArcsonValueType
+import org.philips.arcson.type.ArcsonValueTypeNumber
 
-class JsonNumberBlueprint: JsonSimpleBlueprint() {
-    override val type: JsonValueType
-        get() = JsonValueTypeNumber
+class JsonNumberBlueprint: JsonSimpleInstanceBlueprint() {
+    override fun nextValue(value: Any?) {
 
-    override fun toNiceString(indent: StringIndentation): String = "$indent#NUM[$occurrences]"
+    }
+
+    override val type: ArcsonValueType
+        get() = ArcsonValueTypeNumber
+
+    override fun toNiceString(indent: StringIndentation): String = "$indent#NUM($occurrences)"
 }

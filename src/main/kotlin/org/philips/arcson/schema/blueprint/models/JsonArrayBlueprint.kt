@@ -2,22 +2,14 @@ package org.philips.arcson.schema.blueprint.models
 
 import org.philips.arcson.FieldName
 import org.philips.arcson.schema.blueprint.*
-import org.philips.arcson.schema.getOrMake
 import org.philips.arcson.type.ArcsonValueType
+import org.philips.arcson.type.ArcsonValueTypeArray
 import org.philips.arcson.type.ArcsonValueTypeComplex
-import org.philips.arcson.type.ArcsonValueTypeObject
 import org.philips.arcson.type.ArcsonValueTypeSimple
-import java.util.stream.Collectors
 
-class JsonObjectBlueprint() : JsonComplexInstanceBlueprint() {
-    override val type: ArcsonValueType
-        get() = ArcsonValueTypeObject
-
-    private val collection: MutableMap<FieldName, JsonField> = HashMap()
-
+class JsonArrayBlueprint() : JsonComplexInstanceBlueprint() {
     override fun nextSimpleEncounter(type: ArcsonValueTypeSimple, name: FieldName?, value: Any?): JsonSimpleInstanceBlueprint =
         collection
-            .getOrMake(name!!, ::JsonField)
             .getOrMake(type, type::createBlueprintS)
             .let { it as JsonSimpleInstanceBlueprint }
             .let {
@@ -27,17 +19,14 @@ class JsonObjectBlueprint() : JsonComplexInstanceBlueprint() {
 
     override fun nextComplexEncounter(type: ArcsonValueTypeComplex, name: FieldName?): JsonComplexInstanceBlueprint =
         collection
-            .getOrMake(name!!, ::JsonField)
             .getOrMake(type, type::createBlueprintC)
             .let { it as JsonComplexInstanceBlueprint }
 
-    override fun toNiceString(indent: StringIndentation): String {
-        val nextIndent = indent.next()
+    override val type: ArcsonValueType
+        get() = ArcsonValueTypeArray
 
-        val data = collection.entries.stream()
-            .map {  "$nextIndent${it.key} -> ${it.value.toNiceString(nextIndent)}" }
-            .collect(Collectors.joining(","))
+    private val collection: JsonField = JsonField()
 
-        return "$indent#OBJ[$occurrences] {$data$indent}"
-    }
+    override fun toNiceString(indent: StringIndentation): String =
+        "$indent#ARRAY($occurrences) [${collection.toNiceString(indent.next())}$indent]"
 }

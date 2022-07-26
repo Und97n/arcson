@@ -11,9 +11,9 @@ class JsonField: ObjectByArcsonTypeMap<JsonBlueprint>() {
         val nextIndent = indent.next()
 
         return if (computeSize() == 1) {
-            "\n${getFirst()!!.toNiceString(nextIndent)}"
+            getFirst()!!.toNiceString(nextIndent)
         } else {
-            stream().map { it.toNiceString(nextIndent) }.collect(Collectors.joining("\n", "(\n", "\n$indent)"))
+            stream().map { it.toNiceString(nextIndent) }.collect(Collectors.joining(","))
         }
     }
 }

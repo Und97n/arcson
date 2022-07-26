@@ -1,4 +1,4 @@
-package org.philips.arcson.arcson
+package org.philips.arcson.bcoder
 
 import java.io.OutputStream
 

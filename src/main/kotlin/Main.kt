@@ -1,5 +1,6 @@
+import org.philips.arcson.parser.JsonParser
 import org.philips.arcson.schema.blueprint.models.JsonObjectBlueprint
-import org.philips.arcson.schema.JsonParser
+import org.philips.arcson.schema.SchemaParser
 import kotlin.random.Random
 
 val INPUT = arrayOf(
@@ -19,7 +20,8 @@ val INPUT = arrayOf(
         			"url": "images/thumbnails/0001.jpg",
         			"width": 32,
         			"height": 32
-        		}
+        		},
+        "somedata": [1, 2, 3, "Hahahha"]
         }
 """, """
         {
@@ -53,8 +55,8 @@ fun main(args: Array<String>) {
     val obj = JsonObjectBlueprint()
 
     for (i in 1..1000000) {
-        val parser = JsonParser(INPUT[Random.nextInt(INPUT.size)])
-        parser.parse(obj)
+        val parser = JsonParser(INPUT[Random.nextInt(INPUT.size)], SchemaParser())
+        parser.parse(obj, Unit)
     }
 
     println(obj)

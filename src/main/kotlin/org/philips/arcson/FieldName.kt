@@ -1,4 +1,4 @@
-package org.philips.arcson.schema.blueprint
+package org.philips.arcson
 
 @JvmInline
 value class FieldName(private val name: String) {
