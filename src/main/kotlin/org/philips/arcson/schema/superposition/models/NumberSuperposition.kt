@@ -1,10 +1,9 @@
-package org.philips.arcson.schema.blueprint.models
+package org.philips.arcson.schema.superposition.models
 
-import org.philips.arcson.schema.blueprint.StringIndentation
 import org.philips.arcson.type.ArcsonValueType
 import org.philips.arcson.type.ArcsonValueTypeNumber
 
-class JsonNumberBlueprint: JsonSimpleInstanceBlueprint() {
+class NumberSuperposition: SimpleElementSuperposition() {
     override fun nextValue(value: Any?) {
 
     }

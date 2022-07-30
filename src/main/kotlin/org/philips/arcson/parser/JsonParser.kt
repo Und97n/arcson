@@ -57,7 +57,7 @@ class JsonParser<Node, ComplexNode: Node, SimpleNode: Node, Context> private con
         return currentNode
     }
 
-    fun parse(rootObject: ComplexNode, context: Context) {
-        parseObject(context, rootObject)
+    fun parse(context: Context) {
+        parseEntryAux(context, adapter.onRoot(context), null)
     }
 }

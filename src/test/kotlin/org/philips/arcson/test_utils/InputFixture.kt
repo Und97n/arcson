@@ -1,10 +1,9 @@
 package org.philips.arcson.test_utils
 
-import java.io.InputStream
-import java.math.BigInteger
+import org.philips.arcson.bcoder.DataSource
 import java.util.HexFormat
 
-class InputFixture(_data: ByteArray): InputStream() {
+class InputFixture(_data: ByteArray): DataSource {
     private val data: ByteArray = _data
     private var ptr = 0
 

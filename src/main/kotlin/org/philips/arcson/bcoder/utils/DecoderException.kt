@@ -1,6 +1,6 @@
 package org.philips.arcson.bcoder.utils
 
-import java.io.InputStream
+import org.philips.arcson.bcoder.DataSource
 
-class DecoderException(_msg: String, _stream: InputStream): BCoderException(_msg) {
+class DecoderException(_msg: String, _stream: DataSource): BCoderException(_msg) {
 }

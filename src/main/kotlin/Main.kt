@@ -1,6 +1,6 @@
 import org.philips.arcson.parser.JsonParser
-import org.philips.arcson.schema.blueprint.models.JsonObjectBlueprint
-import org.philips.arcson.schema.SchemaParser
+import org.philips.arcson.schema.superposition.models.ObjectSuperposition
+import org.philips.arcson.schema.superposition.SuperpositionBuilder
 import kotlin.random.Random
 
 val INPUT = arrayOf(
@@ -52,14 +52,14 @@ val INPUT = arrayOf(
 
 fun main(args: Array<String>) {
 
-    val obj = JsonObjectBlueprint()
-
-    for (i in 1..1000000) {
-        val parser = JsonParser(INPUT[Random.nextInt(INPUT.size)], SchemaParser())
-        parser.parse(obj, Unit)
-    }
-
-    println(obj)
+//    val obj = ObjectSuperposition()
+//
+//    for (i in 1..1000000) {
+//        val parser = JsonParser(INPUT[Random.nextInt(INPUT.size)], SuperpositionBuilder())
+//        parser.parse(obj, Unit)
+//    }
+//
+//    println(obj)
 
 
 //    val iterator: JsonIterator = JsonIterator.parse(input)

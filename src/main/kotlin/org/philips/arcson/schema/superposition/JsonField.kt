@@ -1,9 +1,11 @@
-package org.philips.arcson.schema.blueprint
+package org.philips.arcson.schema.superposition
 
+import org.philips.arcson.schema.superposition.models.StringIndentation
+import org.philips.arcson.schema.superposition.models.Superposition
 import org.philips.arcson.type.ObjectByArcsonTypeMap
 import java.util.stream.Collectors
 
-class JsonField: ObjectByArcsonTypeMap<JsonBlueprint>() {
+class JsonField: ObjectByArcsonTypeMap<Superposition>() {
     override fun toString(): String =
         toNiceString(StringIndentation(0))
 

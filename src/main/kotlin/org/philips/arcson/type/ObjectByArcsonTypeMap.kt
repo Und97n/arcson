@@ -5,7 +5,7 @@ import java.util.stream.Stream
 
 @Suppress("UNCHECKED_CAST")
 open class ObjectByArcsonTypeMap<T> (
-    private val data: Array<Any?> = Array(ArcsonValueTypeUID.MAX_VALUE+1) { null }
+    private val data: Array<Any?> = Array(TypeUID.MAX_VALUE+1) { null }
 ) {
     operator fun get(type: ArcsonValueType): T? =
         data[type.uid.asIntValue()] as T?

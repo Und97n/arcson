@@ -1,26 +1,26 @@
-package org.philips.arcson.schema.blueprint.models
+package org.philips.arcson.schema.superposition.models
 
 import org.philips.arcson.FieldName
-import org.philips.arcson.schema.blueprint.*
+import org.philips.arcson.schema.superposition.*
 import org.philips.arcson.type.ArcsonValueType
 import org.philips.arcson.type.ArcsonValueTypeArray
 import org.philips.arcson.type.ArcsonValueTypeComplex
 import org.philips.arcson.type.ArcsonValueTypeSimple
 
-class JsonArrayBlueprint() : JsonComplexInstanceBlueprint() {
-    override fun nextSimpleEncounter(type: ArcsonValueTypeSimple, name: FieldName?, value: Any?): JsonSimpleInstanceBlueprint =
+class ArraySuperposition() : ComplexElementSuperposition() {
+    override fun nextSimpleEncounter(type: ArcsonValueTypeSimple, name: FieldName?, value: Any?): SimpleElementSuperposition =
         collection
-            .getOrMake(type, type::createBlueprintS)
-            .let { it as JsonSimpleInstanceBlueprint }
+            .getOrMake(type, type::createSuperpositionS)
+            .let { it as SimpleElementSuperposition }
             .let {
                 it.nextValue(value)
                 it
             }
 
-    override fun nextComplexEncounter(type: ArcsonValueTypeComplex, name: FieldName?): JsonComplexInstanceBlueprint =
+    override fun nextComplexEncounter(type: ArcsonValueTypeComplex, name: FieldName?): ComplexElementSuperposition =
         collection
-            .getOrMake(type, type::createBlueprintC)
-            .let { it as JsonComplexInstanceBlueprint }
+            .getOrMake(type, type::createSuperpositionC)
+            .let { it as ComplexElementSuperposition }
 
     override val type: ArcsonValueType
         get() = ArcsonValueTypeArray

@@ -5,6 +5,8 @@ import org.philips.arcson.type.ArcsonValueTypeComplex
 import org.philips.arcson.type.ArcsonValueTypeSimple
 
 interface JsonParsingAdapter<Node, ComplexNode: Node, SimpleNode: Node, Context> {
+    fun onRoot(context: Context): ComplexNode
+
     fun onNextSimpleEntry(
         context: Context,
         parent: ComplexNode,

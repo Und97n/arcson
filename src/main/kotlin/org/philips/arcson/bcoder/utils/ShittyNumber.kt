@@ -1,10 +1,10 @@
 package org.philips.arcson.bcoder.utils
 
-import java.io.BufferedInputStream
-import java.io.OutputStream
+import org.philips.arcson.bcoder.DataSource
+import org.philips.arcson.bcoder.DataSink
 
 object ShittyNumber {
-    fun encodeShitty(value: Int, stream: OutputStream) {
+    fun encodeShitty(value: Int, stream: DataSink) {
         var accumulator = value
 
         do {
@@ -19,7 +19,7 @@ object ShittyNumber {
         } while (accumulator != 0)
     }
 
-    fun decodeShitty(stream: BufferedInputStream): Int {
+    fun decodeShitty(stream: DataSource): Int {
         var accumulator = 0
 
         var data: Int

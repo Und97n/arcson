@@ -1,6 +1,6 @@
 package org.philips.arcson.bcoder.utils
 
-import java.io.OutputStream
+import org.philips.arcson.bcoder.DataSink
 
-class EncoderException(_msg: String, _stream: OutputStream): Exception(_msg) {
+class EncoderException(_msg: String, _stream: DataSink): Exception(_msg) {
 }

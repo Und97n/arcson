@@ -48,7 +48,7 @@ class ShittyNumberTest {
     @Test
     fun testDecodeSmall() {
         val fixture = InputFixture.fromHexString("2F")
-        val actual = ShittyNumber.decodeShitty(BufferedInputStream(fixture))
+        val actual = ShittyNumber.decodeShitty(fixture)
 
         assertEquals(0x2F,
             actual)
@@ -57,7 +57,7 @@ class ShittyNumberTest {
     @Test
     fun testDecodeMedium1() {
         val fixture = InputFixture.fromHexString("CA 01")
-        val actual = ShittyNumber.decodeShitty(BufferedInputStream(fixture))
+        val actual = ShittyNumber.decodeShitty(fixture)
 
         assertEquals(0xCA,
             actual)
@@ -66,7 +66,7 @@ class ShittyNumberTest {
     @Test
     fun testDecodeMedium2() {
         val fixture = InputFixture.fromHexString("CA CA 01")
-        val actual = ShittyNumber.decodeShitty(BufferedInputStream(fixture))
+        val actual = ShittyNumber.decodeShitty(fixture)
 
         assertEquals(0x654A,
             actual)
@@ -75,7 +75,7 @@ class ShittyNumberTest {
     @Test
     fun testDecodeLarge() {
         val fixture = InputFixture.fromHexString("CA CA CA CA 01")
-        val actual = ShittyNumber.decodeShitty(BufferedInputStream(fixture))
+        val actual = ShittyNumber.decodeShitty(fixture)
 
         assertEquals(0x1952A54A,
             actual)
@@ -84,7 +84,7 @@ class ShittyNumberTest {
     @Test
     fun testDecodeTooLarge() {
         val fixture = InputFixture.fromHexString("CA CA CA CA CA 01")
-        Assertions.assertThrows(DecoderException::class.java) { ShittyNumber.decodeShitty(BufferedInputStream(fixture)) }
+        Assertions.assertThrows(DecoderException::class.java) { ShittyNumber.decodeShitty(fixture) }
     }
 
     @Test
@@ -101,6 +101,6 @@ class ShittyNumberTest {
         val inF = InputFixture.fromHexString(outF.toHexString())
 
         assertEquals(number,
-            ShittyNumber.decodeShitty(BufferedInputStream(inF)))
+            ShittyNumber.decodeShitty(inF))
     }
 }

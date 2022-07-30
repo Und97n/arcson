@@ -1,4 +1,4 @@
-package org.philips.arcson.schema.blueprint
+package org.philips.arcson.schema.superposition.models
 
 import org.philips.arcson.type.ArcsonValueType
 
@@ -8,7 +8,7 @@ value class StringIndentation(private val indent: Int) {
     fun next(): StringIndentation = StringIndentation(indent+1)
 }
 
-abstract class JsonBlueprint {
+abstract class Superposition {
     private var _occurrences: Long = 0
 
     val occurrences: Long

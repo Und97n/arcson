@@ -1,12 +1,12 @@
 package org.philips.arcson.test_utils
 
+import org.philips.arcson.bcoder.DataSink
 import java.io.ByteArrayOutputStream
-import java.io.OutputStream
 import java.nio.ByteBuffer
 import java.util.stream.Collectors
 import java.util.stream.IntStream
 
-class OutputFixture(): OutputStream() {
+class OutputFixture: DataSink {
     private var buffer = ByteArrayOutputStream()
 
     override fun write(b: Int) {
