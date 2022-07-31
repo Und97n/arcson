@@ -28,15 +28,15 @@ object ShittyNumber {
 
         do {
             data = source.read()
-            if (data.isEOF()) {
-                break; // EOF
-            }
+            data.checkEOF()
 
             if (shift >= 32) throw DecoderException("Too many number bytes", source)
 
             accumulator = accumulator or ((data.asInt() and 0x7F) shl shift)
             shift += 7
-        } while ((data.asInt() and 0x7F) != 0)
+        } while ((data.asInt() and 0x80) != 0)
+
+        source.debugCurrentState("decodeNumberEnd")
 
         return accumulator
     }

@@ -22,11 +22,6 @@ class OutputFixture: DataSink {
         ByteBuffer.wrap(toBytes())
 
     fun toHexString(): String =
-        toByteBuffer().let { buffer ->
-            IntStream
-                .generate { buffer.get().toInt() and 0xFF }
-                .limit(buffer.remaining().toLong())
-        }
-            .mapToObj { String.format("%1\$02X", it) }
-            .collect(Collectors.joining(" "))
+        Utils.bytesToHex(toByteBuffer())
+
 }

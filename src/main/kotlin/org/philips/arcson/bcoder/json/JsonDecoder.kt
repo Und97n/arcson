@@ -24,6 +24,8 @@ class JsonDecoder<Node, ComplexNode: Node, SimpleNode: Node>(
             fieldName)
 
         coder.decode(source, node, this)
+
+        adapter.onComplexEntryEnd(attachment)
     }
 
     fun decode() {

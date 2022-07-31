@@ -1,12 +1,7 @@
 package org.philips.arcson.schema.superposition.models
 
 import org.philips.arcson.type.ArcsonType
-
-@JvmInline
-value class StringIndentation(private val indent: Int) {
-    override fun toString(): String = "\n" + ("  ".repeat(indent))
-    fun next(): StringIndentation = StringIndentation(indent+1)
-}
+import org.philips.arcson.utils.StringIndentation
 
 abstract class Superposition {
     private var _occurrences: Long = 0

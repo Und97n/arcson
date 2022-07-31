@@ -5,22 +5,27 @@ import org.philips.arcson.bcoder.json.ComplexEntryCoder
 import org.philips.arcson.bcoder.DataSink
 import org.philips.arcson.bcoder.DataSource
 import org.philips.arcson.bcoder.json.SimpleEntryCoder
-import org.philips.arcson.bcoder.json.common.CommonCoders.chooseComplexCoder
-import org.philips.arcson.bcoder.json.common.CommonCoders.chooseSimpleCoder
+import org.philips.arcson.bcoder.utils.EncoderException
 import org.philips.arcson.bcoder.utils.UnsupportedTypeException
 import org.philips.arcson.type.*
 
-object CommonObjectCoder: ComplexEntryCoder {
+object CommonArrayCoder: ComplexEntryCoder {
     override fun encodeSimpleMemberHeader(sink: DataSink, type: ArcsonTypeSimple, fieldName: FieldName?): SimpleEntryCoder {
+        if (fieldName != null) {
+            throw EncoderException("Unexpected FieldName at $this", sink)
+        }
+
         TypeCoder.encode(sink, type)
-        FieldNameCoder.encode(sink, fieldName!!)
-        return chooseSimpleCoder(type)
+        return CommonCoders.chooseSimpleCoder(type)
     }
 
     override fun encodeComplexMemberHeader(sink: DataSink, type: ArcsonTypeComplex, fieldName: FieldName?): ComplexEntryCoder {
+        if (fieldName != null) {
+            throw EncoderException("Unexpected FieldName at $this", sink)
+        }
+
         TypeCoder.encode(sink, type)
-        FieldNameCoder.encode(sink, fieldName!!)
-        return chooseComplexCoder(type)
+        return CommonCoders.chooseComplexCoder(type)
     }
 
     override fun encodeFooter(sink: DataSink) {
@@ -35,11 +40,9 @@ object CommonObjectCoder: ComplexEntryCoder {
         var tp = TypeCoder.decode(source)
 
         while (tp !is ArcsonSpecialTypeNONE) {
-            val fieldName = FieldNameCoder.decode(source)
-
             when (tp) {
-                is ArcsonTypeSimple -> callbacks.onNextSimpleEntry(chooseSimpleCoder(tp), fieldName, attachment)
-                is ArcsonTypeComplex -> callbacks.onNextComplexEntry(chooseComplexCoder(tp), fieldName, attachment)
+                is ArcsonTypeSimple -> callbacks.onNextSimpleEntry(CommonCoders.chooseSimpleCoder(tp), null, attachment)
+                is ArcsonTypeComplex -> callbacks.onNextComplexEntry(CommonCoders.chooseComplexCoder(tp), null, attachment)
                 else -> throw UnsupportedTypeException(this.toString(), tp)
             }
 
@@ -48,9 +51,9 @@ object CommonObjectCoder: ComplexEntryCoder {
     }
 
     override val targetType: ArcsonType
-        get() = ArcsonTypeObject
+        get() = ArcsonTypeArray
 
     override fun toString(): String {
-        return "CommonObjectCoder"
+        return "CommonArrayCoder"
     }
 }

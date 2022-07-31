@@ -7,6 +7,7 @@ import org.philips.arcson.type.ArcsonType
 import org.philips.arcson.type.ArcsonTypeComplex
 import org.philips.arcson.type.ArcsonTypeObject
 import org.philips.arcson.type.ArcsonTypeSimple
+import org.philips.arcson.utils.StringIndentation
 import java.util.stream.Collectors
 
 class ObjectSuperposition() : ComplexElementSuperposition() {

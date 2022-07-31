@@ -5,6 +5,7 @@ import org.philips.arcson.schema.superposition.JsonField
 import org.philips.arcson.schema.superposition.createSuperpositionC
 import org.philips.arcson.schema.superposition.createSuperpositionS
 import org.philips.arcson.type.*
+import org.philips.arcson.utils.StringIndentation
 
 class RootSuperposition : ComplexElementSuperposition() {
     override fun nextSimpleEncounter(type: ArcsonTypeSimple, name: FieldName?, value: Any?): SimpleElementSuperposition =

@@ -12,6 +12,8 @@ object ShittyString {
 
     fun decodeShitty(source: DataSource): String {
         val data = source.readWhile(ByteWrapper.ZERO)
+
+        source.debugCurrentState("decodeStringEnd")
         return String(data, StandardCharsets.UTF_8)
     }
 }

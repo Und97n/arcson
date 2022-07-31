@@ -3,7 +3,7 @@ package org.philips.arcson.test_utils
 import org.philips.arcson.bcoder.DataSource
 import org.philips.arcson.bcoder.common.ByteWrapper
 import org.philips.arcson.bcoder.common.wrapToByteWrapper
-import java.util.HexFormat
+import java.util.*
 
 class InputFixture(_data: ByteArray): DataSource {
     private val data: ByteArray = _data
@@ -20,4 +20,11 @@ class InputFixture(_data: ByteArray): DataSource {
         } else {
             ByteWrapper.EOF
         }
+
+    override fun debugCurrentState(msg: String) {
+        val before = Utils.bytesToHex(data.copyOf(ptr))
+        val after = Utils.bytesToHex(data.copyOfRange(ptr, data.size))
+
+        System.out.println("DEBUG at: $msg\n\t$before -> $after\n")
+    }
 }

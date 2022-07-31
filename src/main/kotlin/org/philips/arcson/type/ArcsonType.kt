@@ -9,8 +9,4 @@ abstract class ArcsonType internal constructor(val id: TypeId) {
         id.init(this)
 
     }
-
-    override fun toString(): String {
-        return javaClass.simpleName
-    }
 }

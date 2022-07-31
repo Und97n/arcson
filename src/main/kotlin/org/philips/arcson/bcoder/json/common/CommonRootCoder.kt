@@ -3,15 +3,13 @@ package org.philips.arcson.bcoder.json.common
 import org.philips.arcson.FieldName
 import org.philips.arcson.bcoder.DataSink
 import org.philips.arcson.bcoder.DataSource
-import org.philips.arcson.bcoder.common.wrapToByteWrapper
 import org.philips.arcson.bcoder.json.ComplexEntryCoder
 import org.philips.arcson.bcoder.json.SimpleEntryCoder
+import org.philips.arcson.bcoder.json.common.CommonCoders.chooseComplexCoder
+import org.philips.arcson.bcoder.json.common.CommonCoders.chooseSimpleCoder
 import org.philips.arcson.bcoder.utils.EncoderException
 import org.philips.arcson.bcoder.utils.UnsupportedTypeException
-import org.philips.arcson.type.ArcsonSpecialTypeNONE
-import org.philips.arcson.type.ArcsonType
-import org.philips.arcson.type.ArcsonTypeComplex
-import org.philips.arcson.type.ArcsonTypeSimple
+import org.philips.arcson.type.*
 
 object CommonRootCoder: ComplexEntryCoder {
     override fun encodeSimpleMemberHeader(sink: DataSink, type: ArcsonTypeSimple, fieldName: FieldName?): SimpleEntryCoder {
@@ -20,7 +18,7 @@ object CommonRootCoder: ComplexEntryCoder {
         }
 
         TypeCoder.encode(sink, type)
-        return CommonValueCoders.chooseCoder(type)
+        return chooseSimpleCoder(type)
     }
 
     override fun encodeComplexMemberHeader(sink: DataSink, type: ArcsonTypeComplex, fieldName: FieldName?): ComplexEntryCoder {
@@ -29,7 +27,7 @@ object CommonRootCoder: ComplexEntryCoder {
         }
 
         TypeCoder.encode(sink, type)
-        return CommonObjectCoder
+        return chooseComplexCoder(type)
     }
 
     override fun encodeFooter(sink: DataSink) {
@@ -42,10 +40,11 @@ object CommonRootCoder: ComplexEntryCoder {
         callbacks: ComplexEntryCoder.DecodingCallbacks<C>
     ) {
         var tp = TypeCoder.decode(source)
+
         while (tp !is ArcsonSpecialTypeNONE) {
             when (tp) {
-                is ArcsonTypeSimple -> callbacks.onNextSimpleEntry(CommonValueCoders.chooseCoder(tp), null, attachment)
-                is ArcsonTypeComplex -> callbacks.onNextComplexEntry(CommonObjectCoder, null, attachment)
+                is ArcsonTypeSimple -> callbacks.onNextSimpleEntry(chooseSimpleCoder(tp), null, attachment)
+                is ArcsonTypeComplex -> callbacks.onNextComplexEntry(chooseComplexCoder(tp), null, attachment)
                 else -> throw UnsupportedTypeException(this.toString(), tp)
             }
 

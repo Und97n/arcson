@@ -6,6 +6,7 @@ import org.philips.arcson.type.ArcsonType
 import org.philips.arcson.type.ArcsonTypeArray
 import org.philips.arcson.type.ArcsonTypeComplex
 import org.philips.arcson.type.ArcsonTypeSimple
+import org.philips.arcson.utils.StringIndentation
 
 class ArraySuperposition() : ComplexElementSuperposition() {
     override fun nextSimpleEncounter(type: ArcsonTypeSimple, name: FieldName?, value: Any?): SimpleElementSuperposition =

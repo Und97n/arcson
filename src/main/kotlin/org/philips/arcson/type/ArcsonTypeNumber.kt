@@ -4,4 +4,7 @@ open class ArcsonTypeNumber internal constructor(id: TypeId): ArcsonTypeSimple(i
     companion object: ArcsonTypeNumber(TypeId.ARCSON_NUMBER_TYPE_ID) {
 
     }
+
+    override fun toString(): String =
+        "ArcsonTypeNumber"
 }

@@ -2,6 +2,7 @@ package org.philips.arcson.schema.superposition.models
 
 import org.philips.arcson.type.ArcsonType
 import org.philips.arcson.type.ArcsonTypeNumber
+import org.philips.arcson.utils.StringIndentation
 
 class NumberSuperposition: SimpleElementSuperposition() {
     override fun nextValue(value: Any?) {

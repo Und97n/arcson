@@ -20,7 +20,10 @@ class JsonEncodingAdapter(_sink: DataSink): JsonHandler<Coder, ComplexEntryCoder
         fieldName: FieldName?,
         value: Any?
     ): SimpleEntryCoder =
-        parent.encodeSimpleMemberHeader(sink, type, fieldName)
+        parent.encodeSimpleMemberHeader(sink, type, fieldName).let {
+            it.encode(sink, value)
+            it
+        }
 
     override fun onNextComplexEntry(
         parent: ComplexEntryCoder,
@@ -29,4 +32,7 @@ class JsonEncodingAdapter(_sink: DataSink): JsonHandler<Coder, ComplexEntryCoder
     ): ComplexEntryCoder =
         parent.encodeComplexMemberHeader(sink, type, fieldName)
 
+    override fun onComplexEntryEnd(node: ComplexEntryCoder) {
+        node.encodeFooter(sink)
+    }
 }

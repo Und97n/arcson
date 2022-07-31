@@ -1,8 +1,8 @@
 package org.philips.arcson.schema.superposition
 
-import org.philips.arcson.schema.superposition.models.StringIndentation
 import org.philips.arcson.schema.superposition.models.Superposition
 import org.philips.arcson.type.ObjectByArcsonTypeMap
+import org.philips.arcson.utils.StringIndentation
 import java.util.stream.Collectors
 
 class JsonField: ObjectByArcsonTypeMap<Superposition>() {

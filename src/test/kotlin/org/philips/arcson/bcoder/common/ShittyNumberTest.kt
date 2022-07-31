@@ -9,7 +9,25 @@ import kotlin.test.assertEquals
 
 class ShittyNumberTest {
     @Test
-    fun testEncodeSmall() {
+    fun testEncodeSmall1() {
+        val fixture = OutputFixture()
+        ShittyNumber.encodeShitty(fixture, 1)
+
+        assertEquals("01",
+            fixture.toHexString())
+    }
+
+    @Test
+    fun testEncodeSmall2() {
+        val fixture = OutputFixture()
+        ShittyNumber.encodeShitty(fixture, 0)
+
+        assertEquals("00",
+            fixture.toHexString())
+    }
+
+    @Test
+    fun testEncodeSmall3() {
         val fixture = OutputFixture()
         ShittyNumber.encodeShitty(fixture, 0x6F)
 

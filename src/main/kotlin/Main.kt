@@ -1,8 +1,3 @@
-import org.philips.arcson.parser.JsonParser
-import org.philips.arcson.schema.superposition.models.ObjectSuperposition
-import org.philips.arcson.schema.superposition.SuperpositionBuilder
-import kotlin.random.Random
-
 val INPUT = arrayOf(
     """
         {

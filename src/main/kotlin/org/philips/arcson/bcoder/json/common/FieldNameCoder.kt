@@ -7,7 +7,7 @@ import org.philips.arcson.bcoder.common.ShittyString
 
 object FieldNameCoder {
     fun encode(sink: DataSink, value: FieldName) {
-        ShittyString.encodeShitty(sink, value.toString())
+        ShittyString.encodeShitty(sink, value.value)
     }
 
     fun decode(source: DataSource): FieldName =

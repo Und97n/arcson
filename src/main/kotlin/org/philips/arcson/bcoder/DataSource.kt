@@ -32,4 +32,8 @@ interface DataSource {
 
         return buf.toByteArray()
     }
+
+    fun debugCurrentState(msg: String) {
+        throw NotImplementedError()
+    }
 }

@@ -1,4 +1,4 @@
-package org.philips.arcson.parser
+package org.philips.arcson.text
 
 import com.jsoniter.JsonIterator
 import com.jsoniter.ValueType
@@ -60,7 +60,15 @@ class JsonParser<Node, ComplexNode: Node, SimpleNode: Node> private constructor(
         return currentNode
     }
 
+    private fun parseRoot(rootNode: ComplexNode): Node {
+        parseEntryAux(rootNode, null)
+
+        adapter.onComplexEntryEnd(rootNode)
+
+        return rootNode
+    }
+
     fun parse() {
-        parseEntryAux(adapter.onRoot(), null)
+        parseRoot(adapter.onRoot())
     }
 }
