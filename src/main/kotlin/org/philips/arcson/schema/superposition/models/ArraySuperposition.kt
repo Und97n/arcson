@@ -2,13 +2,13 @@ package org.philips.arcson.schema.superposition.models
 
 import org.philips.arcson.FieldName
 import org.philips.arcson.schema.superposition.*
-import org.philips.arcson.type.ArcsonValueType
-import org.philips.arcson.type.ArcsonValueTypeArray
-import org.philips.arcson.type.ArcsonValueTypeComplex
-import org.philips.arcson.type.ArcsonValueTypeSimple
+import org.philips.arcson.type.ArcsonType
+import org.philips.arcson.type.ArcsonTypeArray
+import org.philips.arcson.type.ArcsonTypeComplex
+import org.philips.arcson.type.ArcsonTypeSimple
 
 class ArraySuperposition() : ComplexElementSuperposition() {
-    override fun nextSimpleEncounter(type: ArcsonValueTypeSimple, name: FieldName?, value: Any?): SimpleElementSuperposition =
+    override fun nextSimpleEncounter(type: ArcsonTypeSimple, name: FieldName?, value: Any?): SimpleElementSuperposition =
         collection
             .getOrMake(type, type::createSuperpositionS)
             .let { it as SimpleElementSuperposition }
@@ -17,13 +17,13 @@ class ArraySuperposition() : ComplexElementSuperposition() {
                 it
             }
 
-    override fun nextComplexEncounter(type: ArcsonValueTypeComplex, name: FieldName?): ComplexElementSuperposition =
+    override fun nextComplexEncounter(type: ArcsonTypeComplex, name: FieldName?): ComplexElementSuperposition =
         collection
             .getOrMake(type, type::createSuperpositionC)
             .let { it as ComplexElementSuperposition }
 
-    override val type: ArcsonValueType
-        get() = ArcsonValueTypeArray
+    override val type: ArcsonType
+        get() = ArcsonTypeArray
 
     private val collection: JsonField = JsonField()
 

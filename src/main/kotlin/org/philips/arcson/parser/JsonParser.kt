@@ -3,61 +3,64 @@ package org.philips.arcson.parser
 import com.jsoniter.JsonIterator
 import com.jsoniter.ValueType
 import org.philips.arcson.FieldName
+import org.philips.arcson.JsonHandler
 import org.philips.arcson.type.*
 import java.io.InputStream
 
-class JsonParser<Node, ComplexNode: Node, SimpleNode: Node, Context> private constructor(
+class JsonParser<Node, ComplexNode: Node, SimpleNode: Node> private constructor(
     private val iterator: JsonIterator,
-    private val adapter: JsonParsingAdapter<Node, ComplexNode, SimpleNode, Context>
+    private val adapter: JsonHandler<Node, ComplexNode, SimpleNode>
 ) {
 
-    constructor(_inputStream: InputStream, _adapter: JsonParsingAdapter<Node, ComplexNode, SimpleNode, Context>):
+    constructor(_inputStream: InputStream, _adapter: JsonHandler<Node, ComplexNode, SimpleNode>):
             this(JsonIterator.parse(_inputStream, 0), _adapter)
 
-    constructor(_inputStr: String, _adapter: JsonParsingAdapter<Node, ComplexNode, SimpleNode, Context>):
+    constructor(_inputStr: String, _adapter: JsonHandler<Node, ComplexNode, SimpleNode>):
             this(JsonIterator.parse(_inputStr), _adapter)
 
-    private fun parseEntryAux(ctx: Context, node: ComplexNode, fName: FieldName?): Node =
+    private fun parseEntryAux(node: ComplexNode, fName: FieldName?): Node =
         when (iterator.whatIsNext()) {
             ValueType.OBJECT ->
-                parseObject(ctx,
-                    adapter.onNextComplexEntry(ctx, node, ArcsonValueTypeObject, fName))
+                parseObject(adapter.onNextComplexEntry(node, ArcsonTypeObject, fName))
             ValueType.ARRAY ->
-                parseArray(ctx,
-                    adapter.onNextComplexEntry(ctx, node, ArcsonValueTypeArray, fName))
+                parseArray(adapter.onNextComplexEntry(node, ArcsonTypeArray, fName))
             ValueType.STRING ->
-                adapter.onNextSimpleEntry(ctx, node, ArcsonValueTypeString, fName, iterator.readString())
+                adapter.onNextSimpleEntry(node, ArcsonTypeString, fName, iterator.readString())
             ValueType.NUMBER ->
-                adapter.onNextSimpleEntry(ctx, node, ArcsonValueTypeNumber, fName, iterator.readNumberAsString())
+                adapter.onNextSimpleEntry(node, ArcsonTypeNumber, fName, iterator.readNumberAsString())
             ValueType.NULL -> TODO()
             ValueType.BOOLEAN -> TODO()
             ValueType.INVALID -> TODO()
             else -> null!!
         }
 
-    private fun parseArray(context: Context, currentNode: ComplexNode): Node {
+    private fun parseArray(currentNode: ComplexNode): Node {
         iterator.readArrayCB({ _, _ ->
-            parseEntryAux(context, currentNode, null)
+            parseEntryAux(currentNode, null)
             true
         }, null)
+
+        adapter.onComplexEntryEnd(currentNode)
 
         return currentNode
     }
 
-    private fun parseObject(context: Context, currentNode: ComplexNode): Node {
+    private fun parseObject(currentNode: ComplexNode): Node {
         iterator.readObjectCB({ _, fieldStr, _ ->
             if (fieldStr == null) {
                 false
             } else {
-                parseEntryAux(context, currentNode, FieldName(fieldStr))
+                parseEntryAux(currentNode, FieldName(fieldStr))
                 true
             }
         }, null)
 
+        adapter.onComplexEntryEnd(currentNode)
+
         return currentNode
     }
 
-    fun parse(context: Context) {
-        parseEntryAux(context, adapter.onRoot(context), null)
+    fun parse() {
+        parseEntryAux(adapter.onRoot(), null)
     }
 }

@@ -1,10 +1,11 @@
-package org.philips.arcson.bcoder.utils
+package org.philips.arcson.bcoder.common
 
 import org.philips.arcson.bcoder.DataSource
 import org.philips.arcson.bcoder.DataSink
+import org.philips.arcson.bcoder.utils.DecoderException
 
 object ShittyNumber {
-    fun encodeShitty(value: Int, stream: DataSink) {
+    fun encodeShitty(sink: DataSink, value: Int) {
         var accumulator = value
 
         do {
@@ -15,27 +16,27 @@ object ShittyNumber {
                 nextByte = nextByte or 0x80
             }
 
-            stream.write(nextByte)
+            sink.write(nextByte.wrapToByteWrapper())
         } while (accumulator != 0)
     }
 
-    fun decodeShitty(stream: DataSource): Int {
+    fun decodeShitty(source: DataSource): Int {
         var accumulator = 0
 
-        var data: Int
+        var data: ByteWrapper
         var shift = 0
 
         do {
-            data = stream.read()
-            if (data == -1) {
+            data = source.read()
+            if (data.isEOF()) {
                 break; // EOF
             }
 
-            if (shift >= 32) throw DecoderException("Too many number bytes", stream)
+            if (shift >= 32) throw DecoderException("Too many number bytes", source)
 
-            accumulator = accumulator or ((data and 0x7F) shl shift)
+            accumulator = accumulator or ((data.asInt() and 0x7F) shl shift)
             shift += 7
-        } while ((data and 0x7F) != 0)
+        } while ((data.asInt() and 0x7F) != 0)
 
         return accumulator
     }

@@ -1,6 +1,6 @@
 package org.philips.arcson.schema.superposition.models
 
-import org.philips.arcson.type.ArcsonValueType
+import org.philips.arcson.type.ArcsonType
 
 @JvmInline
 value class StringIndentation(private val indent: Int) {
@@ -14,7 +14,7 @@ abstract class Superposition {
     val occurrences: Long
         get() = _occurrences
 
-    abstract val type: ArcsonValueType
+    abstract val type: ArcsonType
 
     fun incrementOccurrences() {
         _occurrences++

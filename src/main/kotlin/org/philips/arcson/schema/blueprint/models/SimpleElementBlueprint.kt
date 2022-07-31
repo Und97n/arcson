@@ -1,4 +1,5 @@
 package org.philips.arcson.schema.blueprint.models
 
-class SimpleElementBlueprint {
+abstract class SimpleElementBlueprint {
+    abstract fun getEncoder(): Encoder
 }

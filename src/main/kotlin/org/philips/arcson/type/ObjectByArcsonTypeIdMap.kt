@@ -4,26 +4,26 @@ import java.util.*
 import java.util.stream.Stream
 
 @Suppress("UNCHECKED_CAST")
-open class ObjectByArcsonTypeMap<T> (
+open class ObjectByArcsonTypeIdMap<T> (
     private val data: Array<Any?> = Array(TypeId.MAX_VALUE+1) { null }
 ) {
-    operator fun get(type: ArcsonType): T? =
-        data[type.id.asIntValue()] as T?
+    operator fun get(type: TypeId): T? =
+        data[type.asIntValue()] as T?
 
-    operator fun set(type: ArcsonType, obj: T) =
+    operator fun set(type: TypeId, obj: T) =
         if (has(type)) {
             throw RuntimeException()
         } else {
-            data[type.id.asIntValue()] = obj
+            data[type.asIntValue()] = obj
         }
 
-    fun getOrMake(type: ArcsonType, createFn: () -> T): T =
+    fun getOrMake(type: TypeId, createFn: () -> T): T =
         this[type] ?: createFn().let {
             set(type, it)
             it
         }
 
-    fun has(type: ArcsonType): Boolean = data[type.id.asIntValue()] !== null
+    fun has(type: TypeId): Boolean = data[type.asIntValue()] !== null
 
     fun computeSize(): Int =
         data.count(Objects::nonNull)

@@ -1,6 +1,8 @@
 package org.philips.arcson.test_utils
 
 import org.philips.arcson.bcoder.DataSource
+import org.philips.arcson.bcoder.common.ByteWrapper
+import org.philips.arcson.bcoder.common.wrapToByteWrapper
 import java.util.HexFormat
 
 class InputFixture(_data: ByteArray): DataSource {
@@ -12,10 +14,10 @@ class InputFixture(_data: ByteArray): DataSource {
             InputFixture(HexFormat.of().parseHex(hex.replace("\\s+".toRegex(),"")))
     }
 
-    override fun read(): Int =
+    override fun read(): ByteWrapper =
         if (ptr < data.size) {
-            data[ptr++].toInt() and 0xff
+            (data[ptr++].toInt() and 0xff).wrapToByteWrapper()
         } else {
-            -1
+            ByteWrapper.EOF
         }
 }

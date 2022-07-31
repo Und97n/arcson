@@ -7,7 +7,7 @@ import org.philips.arcson.schema.superposition.createSuperpositionS
 import org.philips.arcson.type.*
 
 class RootSuperposition : ComplexElementSuperposition() {
-    override fun nextSimpleEncounter(type: ArcsonValueTypeSimple, name: FieldName?, value: Any?): SimpleElementSuperposition =
+    override fun nextSimpleEncounter(type: ArcsonTypeSimple, name: FieldName?, value: Any?): SimpleElementSuperposition =
         collection
             .getOrMake(type, type::createSuperpositionS)
             .let { it as SimpleElementSuperposition }
@@ -16,13 +16,13 @@ class RootSuperposition : ComplexElementSuperposition() {
                 it
             }
 
-    override fun nextComplexEncounter(type: ArcsonValueTypeComplex, name: FieldName?): ComplexElementSuperposition =
+    override fun nextComplexEncounter(type: ArcsonTypeComplex, name: FieldName?): ComplexElementSuperposition =
         collection
             .getOrMake(type, type::createSuperpositionC)
             .let { it as ComplexElementSuperposition }
 
-    override val type: ArcsonValueType
-        get() = ArcsonValueTypeUnknown
+    override val type: ArcsonType
+        get() = ArcsonSpecialTypeNONE
 
     private val collection: JsonField = JsonField()
 

@@ -1,28 +1,27 @@
 package org.philips.arcson.schema.superposition
 
 import org.philips.arcson.FieldName
-import org.philips.arcson.parser.JsonParsingAdapter
+import org.philips.arcson.JsonHandler
 import org.philips.arcson.schema.superposition.models.ComplexElementSuperposition
 import org.philips.arcson.schema.superposition.models.RootSuperposition
 import org.philips.arcson.schema.superposition.models.SimpleElementSuperposition
 import org.philips.arcson.schema.superposition.models.Superposition
-import org.philips.arcson.type.ArcsonValueTypeComplex
-import org.philips.arcson.type.ArcsonValueTypeSimple
+import org.philips.arcson.type.ArcsonTypeComplex
+import org.philips.arcson.type.ArcsonTypeSimple
 
 class SuperpositionBuilder:
-    JsonParsingAdapter<Superposition, ComplexElementSuperposition, SimpleElementSuperposition, Unit> {
+    JsonHandler<Superposition, ComplexElementSuperposition, SimpleElementSuperposition> {
 
-    public val rootNode: ComplexElementSuperposition = RootSuperposition()
+    val rootNode: ComplexElementSuperposition = RootSuperposition()
 
-    override fun onRoot(context: Unit): ComplexElementSuperposition {
+    override fun onRoot(): ComplexElementSuperposition {
         rootNode.incrementOccurrences()
         return rootNode
     }
 
     override fun onNextSimpleEntry(
-        context: Unit,
         parent: ComplexElementSuperposition,
-        type: ArcsonValueTypeSimple,
+        type: ArcsonTypeSimple,
         fieldName: FieldName?,
         value: Any?
     ): SimpleElementSuperposition =
@@ -33,9 +32,8 @@ class SuperpositionBuilder:
             }
 
     override fun onNextComplexEntry(
-        context: Unit,
         parent: ComplexElementSuperposition,
-        type: ArcsonValueTypeComplex,
+        type: ArcsonTypeComplex,
         fieldName: FieldName?
     ): ComplexElementSuperposition =
         parent.nextComplexEncounter(type, fieldName)

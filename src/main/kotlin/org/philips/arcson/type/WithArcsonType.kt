@@ -1,5 +1,5 @@
 package org.philips.arcson.type
 
 interface WithArcsonType {
-    val type: ArcsonValueType
+    val type: ArcsonType
 }

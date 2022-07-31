@@ -1,18 +1,17 @@
-package org.philips.arcson.bcoder.utils
+package org.philips.arcson.bcoder.common
 
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
-import org.junit.jupiter.api.assertThrows
+import org.philips.arcson.bcoder.utils.DecoderException
 import org.philips.arcson.test_utils.InputFixture
 import org.philips.arcson.test_utils.OutputFixture
-import java.io.BufferedInputStream
 import kotlin.test.assertEquals
 
 class ShittyNumberTest {
     @Test
     fun testEncodeSmall() {
         val fixture = OutputFixture()
-        ShittyNumber.encodeShitty(0x6F, fixture)
+        ShittyNumber.encodeShitty(fixture, 0x6F)
 
         assertEquals("6F",
             fixture.toHexString())
@@ -21,7 +20,7 @@ class ShittyNumberTest {
     @Test
     fun testEncodeMedium1() {
         val fixture = OutputFixture()
-        ShittyNumber.encodeShitty(0xAB, fixture)
+        ShittyNumber.encodeShitty(fixture, 0xAB)
 
         assertEquals("AB 01",
             fixture.toHexString())
@@ -30,7 +29,7 @@ class ShittyNumberTest {
     @Test
     fun testEncodeMedium2() {
         val fixture = OutputFixture()
-        ShittyNumber.encodeShitty(0x1234, fixture)
+        ShittyNumber.encodeShitty(fixture, 0x1234)
 
         assertEquals("B4 24",
             fixture.toHexString())
@@ -39,7 +38,7 @@ class ShittyNumberTest {
     @Test
     fun testEncodeLarge() {
         val fixture = OutputFixture()
-        ShittyNumber.encodeShitty(0x12345678, fixture)
+        ShittyNumber.encodeShitty(fixture, 0x12345678)
 
         assertEquals("F8 AC D1 91 01",
             fixture.toHexString())
@@ -93,7 +92,7 @@ class ShittyNumberTest {
 
         val outF = OutputFixture()
 
-        ShittyNumber.encodeShitty(number, outF)
+        ShittyNumber.encodeShitty(outF, number)
 
         assertEquals("A1 A8 D9 C3 09",
             outF.toHexString())

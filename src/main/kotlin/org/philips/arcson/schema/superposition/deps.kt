@@ -3,16 +3,16 @@ package org.philips.arcson.schema.superposition
 import org.philips.arcson.schema.superposition.models.*
 import org.philips.arcson.type.*
 
-fun ArcsonValueTypeSimple.createSuperpositionS(): SimpleElementSuperposition =
+fun ArcsonTypeSimple.createSuperpositionS(): SimpleElementSuperposition =
     when (this) {
-        is ArcsonValueTypeString -> StringSuperposition()
-        is ArcsonValueTypeNumber -> NumberSuperposition()
+        is ArcsonTypeString -> StringSuperposition()
+        is ArcsonTypeNumber -> NumberSuperposition()
         else -> throw IllegalAccessException("Json value type $this is not supported for blueprints making")
     }
 
-fun ArcsonValueTypeComplex.createSuperpositionC(): ComplexElementSuperposition =
+fun ArcsonTypeComplex.createSuperpositionC(): ComplexElementSuperposition =
     when (this) {
-        is ArcsonValueTypeObject -> ObjectSuperposition()
-        is ArcsonValueTypeArray -> ArraySuperposition()
+        is ArcsonTypeObject -> ObjectSuperposition()
+        is ArcsonTypeArray -> ArraySuperposition()
         else -> throw IllegalAccessException("Json value type $this is not supported for blueprints making")
     }

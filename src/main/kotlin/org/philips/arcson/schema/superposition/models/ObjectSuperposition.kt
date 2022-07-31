@@ -3,19 +3,19 @@ package org.philips.arcson.schema.superposition.models
 import org.philips.arcson.FieldName
 import org.philips.arcson.schema.superposition.*
 import org.philips.arcson.schema.getOrMake
-import org.philips.arcson.type.ArcsonValueType
-import org.philips.arcson.type.ArcsonValueTypeComplex
-import org.philips.arcson.type.ArcsonValueTypeObject
-import org.philips.arcson.type.ArcsonValueTypeSimple
+import org.philips.arcson.type.ArcsonType
+import org.philips.arcson.type.ArcsonTypeComplex
+import org.philips.arcson.type.ArcsonTypeObject
+import org.philips.arcson.type.ArcsonTypeSimple
 import java.util.stream.Collectors
 
 class ObjectSuperposition() : ComplexElementSuperposition() {
-    override val type: ArcsonValueType
-        get() = ArcsonValueTypeObject
+    override val type: ArcsonType
+        get() = ArcsonTypeObject
 
     private val collection: MutableMap<FieldName, JsonField> = HashMap()
 
-    override fun nextSimpleEncounter(type: ArcsonValueTypeSimple, name: FieldName?, value: Any?): SimpleElementSuperposition =
+    override fun nextSimpleEncounter(type: ArcsonTypeSimple, name: FieldName?, value: Any?): SimpleElementSuperposition =
         collection
             .getOrMake(name!!, ::JsonField)
             .getOrMake(type, type::createSuperpositionS)
@@ -25,7 +25,7 @@ class ObjectSuperposition() : ComplexElementSuperposition() {
                 it
             }
 
-    override fun nextComplexEncounter(type: ArcsonValueTypeComplex, name: FieldName?): ComplexElementSuperposition =
+    override fun nextComplexEncounter(type: ArcsonTypeComplex, name: FieldName?): ComplexElementSuperposition =
         collection
             .getOrMake(name!!, ::JsonField)
             .getOrMake(type, type::createSuperpositionC)

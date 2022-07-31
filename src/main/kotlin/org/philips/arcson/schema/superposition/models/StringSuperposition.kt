@@ -1,15 +1,15 @@
 package org.philips.arcson.schema.superposition.models
 
-import org.philips.arcson.type.ArcsonValueType
-import org.philips.arcson.type.ArcsonValueTypeString
+import org.philips.arcson.type.ArcsonType
+import org.philips.arcson.type.ArcsonTypeString
 
 class StringSuperposition: SimpleElementSuperposition() {
     override fun nextValue(value: Any?) {
 
     }
 
-    override val type: ArcsonValueType
-        get() = ArcsonValueTypeString
+    override val type: ArcsonType
+        get() = ArcsonTypeString
 
     override fun toNiceString(indent: StringIndentation): String =
         "$indent#STR($occurrences)"
